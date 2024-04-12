@@ -25,17 +25,19 @@ app.get('/', (req, res) => {
 app.post('/todo', async (req, res) => {
   const createPayload = todoSchema.parse(req.body)
   console.log(createPayload)
-  if (!createPayload.success) {
+  if (!createPayload) {
+    console.log('Payload not good')
     res.status(411).json({ msg: 'Invalid input' })
     return
   }
   console.log('Create a new todo')
   // create to do in mongodb
   await Todo.create({
-    title: createPayload.data.title,
-    description: createPayload.data.description,
+    title: createPayload.title,
+    description: createPayload.description,
     done: false,
   })
+
   res.send({ msg: 'Todo created' })
 })
 
@@ -56,13 +58,13 @@ app.put('/todo/:id', (req, res) => {
 app.put('/completed', async (req, res) => {
   const updatePayload = updateTodoSchema.parse(req.body)
   console.log(updatePayload)
-  if (!updatePayload.success) {
+  if (!updatePayload) {
     res.status(411).json({ msg: 'Invalid input' })
     return
   }
   console.log('Update todo')
   // to do : update to do in mongodb
-  await Todo.updateOne({ _id: updatePayload.data.id }, { done: true })
+  await Todo.updateOne({ _id: updatePayload.id }, { done: true })
   res.send({ msg: 'Todo updated' })
 })
 
