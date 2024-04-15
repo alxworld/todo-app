@@ -1,5 +1,6 @@
 // write backend code here
 const express = require('express')
+const cors = require('cors')
 const app = express()
 
 const todoSchema = require('./types').todoSchema
@@ -8,6 +9,7 @@ const updateTodoSchema = require('./types').updateTodoSchema
 const Todo = require('./db').Todo
 
 app.use(express.json())
+app.use(cors())
 
 // expected input from frontend
 // {
