@@ -1,4 +1,4 @@
-export function Todo({ todos }) {
+export default function Todo({ todos }) {
   const mytodos = todos.map(todo => (
     <div key={todo.id}>
       <input type="text" placeholder="title" value={todo.title} /> <br />
